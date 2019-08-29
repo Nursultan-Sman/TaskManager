@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a th:href="@{/}" class="navbar-brand"><b>BestProfi Task Manager</b></a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <a class="btn btn-info" href="#" th:href="@{/}"> Back to List of Tasks </a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="well well-sm">
+            <h4>Create Task</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <form th:action="@{/save}" th:object="${task}" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
+                <div class="form-group">
+                    <label for="url">Url:</label>
+                    <input type="url" class="form-control" id="url" name="url">
+                </div>
+                <div class="form-group">
+                    <label for="parameter">Parameters:</label>
+                    <textarea class="form-control" id="parameter" rows="3" name="parameter" placeholder="JSON format text"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="method">Method:</label>
+                    <input type="text" class="form-control" id="method" name="method">
+                </div>
+                <div class="form-group">
+                    <label for="cronTime">Cron Time:</label>
+                    <input type="text" class="form-control" id="cronTime" name="cronTime">
+                </div>
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

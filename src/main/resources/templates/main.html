@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a th:href="@{/}" class="navbar-brand"><b>BestProfi Task Manager</b></a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <a class="btn btn-info" th:href="@{/createTask}">Add Task</a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="well well-sm">
+            <h4>Tasks</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th colspan="2"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${tasks.isEmpty()}">
+                    <td colspan="3">No Tasks Available</td>
+                </tr>
+                <tr th:each="task : ${tasks}">
+                    <td><span th:text="${task.name}"></span></td>
+                    <td><span th:text="${task.description}"></span></td>
+                    <td><span th:text="${task.status}"></span></td>
+                    <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit Task</a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete Task</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
