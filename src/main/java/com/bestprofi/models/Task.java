@@ -1,6 +1,7 @@
 package com.bestprofi.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity(name = "task")
@@ -9,11 +10,17 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @NotBlank(message = "Name is required")
     private String name;
+    @NotBlank(message = "Description is required")
     private String description;
+    @NotBlank(message = "URL is required")
     private String url;
+    @NotBlank(message = "Parameter is required")
     private String parameter;
+    @NotBlank(message = "Method is required")
     private String method;
+    @NotBlank(message = "Cron Time is required")
     private String cronTime;
     private String status;
     @OneToMany(targetEntity = Logs.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

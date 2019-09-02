@@ -34,27 +34,27 @@
             <form th:action="@{/updateTask/{id}(id=${task.id})}" th:object="${task}" method="post">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${task.name}">
+                    <input type="text" class="form-control" id="name" th:field="*{name}">
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <input type="text" class="form-control" id="description" name="description" th:value="${task.description}">
+                    <input type="text" class="form-control" id="description" th:field="*{description}">
                 </div>
                 <div class="form-group">
                     <label for="url">Url:</label>
-                    <input type="url" class="form-control" id="url" name="url" th:value="${task.url}">
+                    <input type="url" class="form-control" id="url" th:field="*{url}">
                 </div>
                 <div class="form-group">
                     <label for="parameter">Parameters:</label>
-                    <textarea class="form-control" id="parameter" rows="3" name="parameter" th:value="${task.parameter}" placeholder="JSON format text"></textarea>
+                    <textarea class="form-control" id="parameter" rows="3" th:field="*{parameter}" placeholder="JSON format text"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="method">Method:</label>
-                    <input type="text" class="form-control" id="method" name="method" th:value="${task.method}">
+                    <input type="text" class="form-control" id="method" th:field="*{method}">
                 </div>
                 <div class="form-group">
                     <label for="cronTime">Cron Time:</label>
-                    <input type="text" class="form-control" id="cronTime" name="cronTime" th:value="${task.cronTime}">
+                    <input type="text" class="form-control" id="cronTime" th:field="*{cronTime}">
                 </div>
                 <button type="submit" class="btn btn-success">Save</button>
             </form>

@@ -6,10 +6,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class MainController {
@@ -30,7 +33,10 @@ public class MainController {
     }
 
     @PostMapping("/save")
-    public String saveTask(@ModelAttribute(name = "task") Task task) {
+    public String saveTask(@Valid Task task, Errors errors) {
+        if (errors.hasErrors()) {
+            return "createTaskForm";
+        }
         taskRepository.save(task);
         return "redirect:/";
     }
@@ -52,6 +58,12 @@ public class MainController {
 
     @GetMapping("/deleteTask/{id}")
     public String deleteTask(@PathVariable("id") Task task) {
+        taskRepository.delete(task);
+        return "redirect:/";
+    }
+
+    @GetMapping("/activeTask/{id}")
+    public String activeTask(@PathVariable("id") Task task) {
         taskRepository.delete(task);
         return "redirect:/";
     }

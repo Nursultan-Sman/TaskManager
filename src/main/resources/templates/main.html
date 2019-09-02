@@ -50,6 +50,7 @@
                     <td><span th:text="${task.status}"></span></td>
                     <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit Task</a></td>
                     <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete Task</a></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{/activeTask/{id}(id=${task.id})}">Activate Task</a></td>
                 </tr>
                 </tbody>
             </table>
