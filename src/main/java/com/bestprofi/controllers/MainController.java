@@ -2,6 +2,7 @@ package com.bestprofi.controllers;
 
 import com.bestprofi.models.Task;
 import com.bestprofi.repositories.TaskRepository;
+import com.bestprofi.services.SchedulerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class MainController {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private SchedulerService schedulerService;
 
     @GetMapping("/")
     public String getMainPage(Model model) {
@@ -37,6 +40,7 @@ public class MainController {
         if (errors.hasErrors()) {
             return "createTaskForm";
         }
+        task.setStatus("Created");
         taskRepository.save(task);
         return "redirect:/";
     }
@@ -62,9 +66,27 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/activeTask/{id}")
-    public String activeTask(@PathVariable("id") Task task) {
-        taskRepository.delete(task);
+    @GetMapping("/activateTask/{id}")
+    public String activateTask(@PathVariable("id") Task task) {
+        schedulerService.activateTask(task);
+        return "redirect:/";
+    }
+
+    @GetMapping("/deactivateTask/{id}")
+    public String deactiveTask(@PathVariable("id") Task task) {
+        schedulerService.deactivateTask(task);
+        return "redirect:/";
+    }
+
+//    @GetMapping("/startTask/{id}")
+//    public String startTask(@PathVariable("id") Task task) {
+//        schedulerService.fireJob(task);
+//        return "redirect:/";
+//    }
+
+    @GetMapping("/stopTask/{id}")
+    public String stopTask(@PathVariable("id") Task task) {
+        schedulerService.interruptJob(task);
         return "redirect:/";
     }
 }

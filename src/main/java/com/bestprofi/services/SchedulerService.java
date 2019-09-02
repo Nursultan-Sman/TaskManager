@@ -1,6 +1,8 @@
 package com.bestprofi.services;
 
 import com.bestprofi.models.Task;
+import com.bestprofi.quartz.Job;
+import com.bestprofi.repositories.TaskRepository;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,12 @@ import java.util.Objects;
 public class SchedulerService {
 
     @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
     private Scheduler scheduler;
 
     public void activateTask(Task task) {
+
         JobKey jobKey = new JobKey("MailJobName" + task.getId() ,"group" + task.getId());
 
         JobDataMap jobDataMap = new JobDataMap();
@@ -35,12 +40,14 @@ public class SchedulerService {
             if (!scheduler.isStarted())
                 scheduler.start();
             scheduler.scheduleJob(jobDetail, trigger);
+            task.setStatus("Activated");
+            taskRepository.save(task);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
     }
 
-    public void deActivateTask(Task task)  {
+    public void deactivateTask(Task task)  {
         try {
             JobKey jobKey = findJobKey("MailJobName" + task.getId());
             List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
@@ -49,7 +56,19 @@ public class SchedulerService {
                 keys.add(trigger.getKey());
             }
             scheduler.unscheduleJobs(keys);
+            task.setStatus("Deactivated");
+            taskRepository.save(task);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void interruptJob(Task task){
+        try {
+            JobKey jobKey = findJobKey("MailJobName" + task.getId());
+            scheduler.interrupt(jobKey);
+            task.setStatus("Interrupted");
+            taskRepository.save(task);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

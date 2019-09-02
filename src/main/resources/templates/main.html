@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+        .status{
+            color: green;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -21,7 +26,7 @@
         </nav>
     </div>
     <div class="row">
-        <a class="btn btn-info" th:href="@{/createTask}">Add Task</a>
+        <a class="btn btn-info" th:href="@{/createTask}">Create New Task</a>
     </div>
     <br>
     <div class="row">
@@ -47,10 +52,13 @@
                 <tr th:each="task : ${tasks}">
                     <td><span th:text="${task.name}"></span></td>
                     <td><span th:text="${task.description}"></span></td>
-                    <td><span th:text="${task.status}"></span></td>
-                    <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit Task</a></td>
-                    <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete Task</a></td>
-                    <td><a class="btn btn-primary btn-xs" th:href="@{/activeTask/{id}(id=${task.id})}">Activate Task</a></td>
+                    <td><span th:text="${task.status}" class="status"></span></td>
+                    <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{/activateTask/{id}(id=${task.id})}">Activate</a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{/deactivateTask/{id}(id=${task.id})}">Deactivate</a></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{/startTask/{id}(id=${task.id})}">Start now</a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{/stopTask/{id}(id=${task.id})}">Stop now</a></td>
                 </tr>
                 </tbody>
             </table>
