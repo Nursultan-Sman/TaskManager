@@ -23,8 +23,8 @@ public class Task {
     @NotBlank(message = "Cron Time is required")
     private String cronTime;
     private String status;
-    @OneToMany(targetEntity = Logs.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Logs> logs;
+    @OneToMany(targetEntity = Log.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Log> logs;
 
     public long getId() {
         return id;
@@ -90,11 +90,11 @@ public class Task {
         this.status = status;
     }
 
-    public Set<Logs> getLogs() {
+    public Set<Log> getLogs() {
         return logs;
     }
 
-    public void setLogs(Set<Logs> logs) {
+    public void setLogs(Set<Log> logs) {
         this.logs = logs;
     }
 }

@@ -6,7 +6,7 @@ import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-public class Job extends QuartzJobBean {
+public class Job extends QuartzJobBean implements InterruptableJob {
     @Autowired
     private ClientService clientService;
 
@@ -15,5 +15,10 @@ public class Job extends QuartzJobBean {
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         Task task = (Task) jobDataMap.get("task");
         clientService.sendPost(task);
+    }
+
+    @Override
+    public void interrupt() throws UnableToInterruptJobException {
+
     }
 }

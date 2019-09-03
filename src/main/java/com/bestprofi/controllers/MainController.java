@@ -73,16 +73,16 @@ public class MainController {
     }
 
     @GetMapping("/deactivateTask/{id}")
-    public String deactiveTask(@PathVariable("id") Task task) {
+    public String deactivateTask(@PathVariable("id") Task task) {
         schedulerService.deactivateTask(task);
         return "redirect:/";
     }
 
-//    @GetMapping("/startTask/{id}")
-//    public String startTask(@PathVariable("id") Task task) {
-//        schedulerService.fireJob(task);
-//        return "redirect:/";
-//    }
+    @GetMapping("/startTask/{id}")
+    public String startTask(@PathVariable("id") Task task) {
+        schedulerService.startTask(task);
+        return "redirect:/";
+    }
 
     @GetMapping("/stopTask/{id}")
     public String stopTask(@PathVariable("id") Task task) {
