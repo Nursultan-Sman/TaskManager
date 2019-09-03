@@ -22,7 +22,7 @@ public class SchedulerService {
 
     public void activateTask(Task task) {
 
-        JobKey jobKey = new JobKey("MailJobName" + task.getId() ,"group" + task.getId());
+        JobKey jobKey = new JobKey("JobName" + task.getId() ,"group" + task.getId());
 
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("task", task);
@@ -33,15 +33,18 @@ public class SchedulerService {
                 .build();
 
         Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("MailTriggerName" + task.getId(), "group" + task.getId())
+                .withIdentity("TriggerName" + task.getId(), "group" + task.getId())
                 .withSchedule(CronScheduleBuilder.cronSchedule(task.getCronTime())).build();
 
         try {
-            if (!scheduler.isStarted())
+            if (!scheduler.isStarted()) {
                 scheduler.start();
-            scheduler.scheduleJob(jobDetail, trigger);
-            task.setStatus("Activated");
-            taskRepository.save(task);
+            }
+            if (!scheduler.checkExists(jobKey)) {
+                scheduler.scheduleJob(jobDetail, trigger);
+                task.setStatus("Activated");
+                taskRepository.save(task);
+            }
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
@@ -49,7 +52,7 @@ public class SchedulerService {
 
     public void deactivateTask(Task task)  {
         try {
-            JobKey jobKey = findJobKey("MailJobName" + task.getId());
+            JobKey jobKey = findJobKey("JobName" + task.getId());
             List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
             List<TriggerKey> keys = new ArrayList<>();
             for (Trigger trigger : triggers) {
@@ -63,9 +66,29 @@ public class SchedulerService {
         }
     }
 
+    public void startTask(Task task) {
+        try {
+            Trigger triggerOld= null;
+            JobKey jobKey = findJobKey("JobName" + task.getId());
+//            JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+            List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
+            Trigger newTrigger = TriggerBuilder.newTrigger()
+                    .withIdentity("TriggerName" + task.getId(), "group" + task.getId())
+                    .startNow().build();
+            for (Trigger trigger : triggers) {
+                triggerOld = trigger;
+                scheduler.rescheduleJob(trigger.getKey(), newTrigger);
+//                scheduler.rescheduleJob(newTrigger.getKey(), trigger);
+            }
+            scheduler.rescheduleJob(newTrigger.getKey(),triggerOld);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void interruptJob(Task task){
         try {
-            JobKey jobKey = findJobKey("MailJobName" + task.getId());
+            JobKey jobKey = findJobKey("JobName" + task.getId());
             scheduler.interrupt(jobKey);
             task.setStatus("Interrupted");
             taskRepository.save(task);
