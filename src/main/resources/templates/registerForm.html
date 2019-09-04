@@ -22,7 +22,7 @@
     <div class="row" id="loginForm">
         <div class="col-md-3 col-md-offset-4">
             <p id="loginFormText">Registration Form</p>
-            <form th:action="@{/createUser}" th:object="${user}" method="post">
+            <form th:action="@{/register}" th:object="${user}" method="post">
                 <div class="form-group">
                     <label for="username">Username: <span class="validationError">*</span></label>
                     <input type="text" class="form-control" id="username" th:field="*{username}">

@@ -1,13 +1,18 @@
 package com.bestprofi.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,14 +23,13 @@ public class User {
     @Transient
     @NotBlank(message = "Password is required")
     private String repassword;
-//    @Email
-//    @NotBlank(message = "Email is required")
-//    private String email;
-//    @NotBlank(message = "First Name is required")
-//    private String firstName;
-//    @NotBlank(message = "Last Name is required")
-//    private String lastName;
+
     private boolean active;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -67,27 +71,38 @@ public class User {
         this.active = active;
     }
 
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public void setFirstName(String firstName) {
-//        this.firstName = firstName;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-//
-//    public void setLastName(String lastName) {
-//        this.lastName = lastName;
-//    }
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+
 }
