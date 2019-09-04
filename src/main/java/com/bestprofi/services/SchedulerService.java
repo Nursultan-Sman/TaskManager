@@ -71,19 +71,20 @@ public class SchedulerService {
 
     public void startTask(Task task) {
         try {
-            Trigger triggerOld= null;
-            JobKey jobKey = findJobKey("JobName" + task.getId());
-//            JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-            List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
-            Trigger newTrigger = TriggerBuilder.newTrigger()
-                    .withIdentity("TriggerName" + task.getId(), "group" + task.getId())
+            JobKey jobKey = new JobKey("OnceJobName" + task.getId() ,"group" + task.getId());
+
+            JobDataMap jobDataMap = new JobDataMap();
+            jobDataMap.put("task", task);
+
+            JobDetail jobDetail = JobBuilder.newJob(Job.class)
+                    .withIdentity(jobKey)
+                    .usingJobData(jobDataMap)
+                    .build();
+
+            Trigger trigger = TriggerBuilder.newTrigger()
+                    .withIdentity("OnceTriggerName" + task.getId(), "group" + task.getId())
                     .startNow().build();
-            for (Trigger trigger : triggers) {
-                triggerOld = trigger;
-                scheduler.rescheduleJob(trigger.getKey(), newTrigger);
-//                scheduler.rescheduleJob(newTrigger.getKey(), trigger);
-            }
-            scheduler.rescheduleJob(newTrigger.getKey(),triggerOld);
+            scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

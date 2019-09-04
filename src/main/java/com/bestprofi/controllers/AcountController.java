@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Map;
+=======
+>>>>>>> 1273224da2bdd20ad5c22ab5dde2e47ac961233b
 
 @Controller
 public class AcountController {
