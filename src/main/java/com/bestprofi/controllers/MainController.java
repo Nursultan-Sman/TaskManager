@@ -45,6 +45,15 @@ public class MainController {
         return "redirect:/";
     }
 
+    @GetMapping("/viewTask/{id}")
+    public String viewTask(@PathVariable("id") long id, Model model) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid task Id: " + id));
+        model.addAttribute("task", task);
+        model.addAttribute("logs",task.getLogs());
+        return "viewTaskForm";
+    }
+
     @GetMapping("/editTask/{id}")
     public String editTask(@PathVariable("id") long id, Model model) {
         Task task = taskRepository.findById(id)

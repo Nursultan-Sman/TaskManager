@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a th:href="@{/}" class="navbar-brand"><b>BestProfi Task Manager</b></a>
+                </div>
+                <div class="nav navbar-nav navbar-right">
+                    <form th:action="@{/logout}" method="post">
+                        <input class="btn btn-link" type="submit" value="Sign Out"/>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <a class="btn btn-info" href="#" th:href="@{/}"> Back to List of Tasks </a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="well well-sm">
+            <h4>Task Details</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table" th:object="${task}">
+                <tr>
+                    <td>Name: </td>
+                    <td><span th:text="${task.name}"></span></td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td><span th:text="${task.description}"></span></td>
+                </tr>
+                <tr>
+                    <td>Cron Time: </td>
+                    <td><span th:text="${task.cronTime}"></span>/td>
+                </tr>
+                <tr>
+                    <td>URL: </td>
+                    <td><span th:text="${task.url}"></span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            <h2>Logs</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Response code</th>
+                    <th>Response message</th>
+                    <th>Start time</th>
+                    <th>End time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="log : ${logs}">
+                    <td><span th:text="${log.responseCode}"></span></td>
+                    <td><span th:text="${log.responseMessage}"></span></td>
+                    <td><span th:text="${log.startDate}"></span></td>
+                    <td><span th:text="${log.endDate}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

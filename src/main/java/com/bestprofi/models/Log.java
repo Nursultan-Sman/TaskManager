@@ -10,7 +10,8 @@ public class Log {
     private long id;
     private Date startDate;
     private Date endDate;
-    private String response;
+    private String responseCode;
+    private String responseMessage;
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
@@ -19,10 +20,11 @@ public class Log {
 
     }
 
-    public Log(Date startDate, Date endDate, String response, Task task) {
+    public Log(Date startDate, Date endDate, String responseCode, String responseMessage, Task task) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.response = response;
+        this.responseCode = responseCode;
+        this.responseMessage = responseMessage;
         this.task = task;
     }
 
@@ -50,12 +52,20 @@ public class Log {
         this.endDate = endDate;
     }
 
-    public String getResponse() {
-        return response;
+    public String getResponseCode() {
+        return responseCode;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
     }
 
     public Task getTask() {

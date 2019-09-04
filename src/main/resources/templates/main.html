@@ -54,6 +54,7 @@
                     <td><span th:text="${task.name}"></span></td>
                     <td><span th:text="${task.description}"></span></td>
                     <td><span th:text="${task.status}" class="status"></span></td>
+                    <td><a class="btn btn-link btn-xs" th:href="@{/viewTask/{id}(id=${task.id})}">View</a></td>
                     <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
                     <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
                     <td><a class="btn btn-primary btn-xs" th:href="@{/activateTask/{id}(id=${task.id})}">Activate</a></td>
