@@ -71,7 +71,7 @@ public class SchedulerService {
 
     public void startTask(Task task) {
         try {
-            JobKey jobKey = new JobKey("OnceJobName" + task.getId() ,"group" + task.getId());
+            JobKey jobKey = new JobKey("JobName" + task.getId() ,"group" + task.getId());
 
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("task", task);
