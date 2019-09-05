@@ -5,12 +5,38 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <style>
-        .status{
-            color: green;
-        }
+        /*.status{*/
+        /*    color: green;*/
+        /*}*/
     </style>
+
+    <script th:inline="javascript">
+        var CLASS_NAME = 'status';
+        var strColorPairs = Array(
+            {'status' : 'Activated', 'color' : 'green'},
+            {'status' : 'Deactivated', 'color' : 'orange'},
+            {'status' : 'Created', 'color' : 'grey'},
+            {'status' : 'Running', 'color' : 'green'},
+            {'status' : 'Interrupted', 'color' : 'red'}
+        );
+        function myInit(){
+            var curContent = document.getElementsByClassName("status");
+            for(i = 0; i<curContent.length; i++){
+                for(j = 0; j<strColorPairs.length; j++){
+                    if(strColorPairs[j].status == curContent[i].outerText){
+                        curContent[i].style.color = strColorPairs[j].color;
+                    }
+                }
+            }
+
+        }
+
+    </script>
+
 </head>
-<body>
+<body onload="myInit()">
+
+
 <div class="container">
     <div class="row">
         <nav class="navbar">

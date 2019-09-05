@@ -22,19 +22,24 @@ public class Job extends QuartzJobBean implements InterruptableJob {
         thisThread = Thread.currentThread();
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         Task task = (Task) jobDataMap.get("task");
-        task.setStatus("Running...");
-        try {
-            thisThread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        task.setStatus("Running");
         taskRepository.save(task);
         // this is for checking interrupt() function
 //        while(!isJobInterrupted){
 //            System.out.println("do something.....");
 //        }
-        clientService.sendPost(task);
-        task.setStatus("Created...");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Do something");
+        if(isJobInterrupted){
+            task.setStatus("Interrupted");
+        }else{
+            task.setStatus("Created");
+        }
+        //clientService.sendPost(task);
         taskRepository.save(task);
     }
 
