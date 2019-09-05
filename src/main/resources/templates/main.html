@@ -32,33 +32,91 @@
              for(i = 0; i<curContent.length; i++){
                 console.log(curContent[i].outerText);
 
-                // $('#deactivate*').filter(function () {
-                //     return curContent[i].outerText === "Deactivated"
-                // }).addClass("disable_a_href");
-
                  if(curContent[i].outerText === "Created"){
-
-                     // add class disabled jumisi kobeip ketti, poka
 
                      // var elmDeactivate = $('#deactivate*')[i];
                      // var jelmDeactivate = $(elmDeactivate);
                      // jelmDeactivate.addClass("disable_a_href");
-                     //
-                     // var elmStop = $('#stop*')[i];
-                     // var jelmStop = $(elmStop);
-                     // jelmStop.addClass("disable_a_href");
-                     //
-                     // var elmActivate = $('#activate*')[i];
-                     // var jelmActivate = $(elmActivate);
-                     // jelmActivate.removeClass("disable_a_href");
-                     //
-                     // var elmStart = $('#start*')[i];
-                     // var jelmStart = $(elmStart);
-                     // jelmStart.removeClass("disable_a_href");
 
-                     var element = document.querySelectorAll('#deactivate');
-                     element[i].classList.add("disabled");
+                     var elementsActivate = document.querySelectorAll('#activate');
+                     elementsActivate[i].classList.remove("disabled");
+
+                     var elementsDeactivate = document.querySelectorAll('#deactivate');
+                     elementsDeactivate[i].classList.add("disabled");
+
+                     var elementsStart = document.querySelectorAll('#start');
+                     elementsStart[i].classList.remove("disabled");
+
+                     var elementsStop = document.querySelectorAll('#stop');
+                     elementsStop[i].classList.add("disabled");
+
                  }
+
+                 if(curContent[i].outerText === "Activated"){
+
+                     var elementsActivate = document.querySelectorAll('#activate');
+                     elementsActivate[i].classList.add("disabled");
+
+                     var elementsDeactivate = document.querySelectorAll('#deactivate');
+                     elementsDeactivate[i].classList.remove("disabled");
+
+                     var elementsStart = document.querySelectorAll('#start');
+                     elementsStart[i].classList.remove("disabled");
+
+                     var elementsStop = document.querySelectorAll('#stop');
+                     elementsStop[i].classList.add("disabled");
+
+                 }
+
+                 if(curContent[i].outerText === "Deactivated"){
+
+                     var elementsActivate = document.querySelectorAll('#activate');
+                     elementsActivate[i].classList.remove("disabled");
+
+                     var elementsDeactivate = document.querySelectorAll('#deactivate');
+                     elementsDeactivate[i].classList.add("disabled");
+
+                     var elementsStart = document.querySelectorAll('#start');
+                     elementsStart[i].classList.remove("disabled");
+
+                     var elementsStop = document.querySelectorAll('#stop');
+                     elementsStop[i].classList.add("disabled");
+
+                 }
+
+                 if(curContent[i].outerText === "Running"){
+
+                     var elementsActivate = document.querySelectorAll('#activate');
+                     elementsActivate[i].classList.add("disabled");
+
+                     var elementsDeactivate = document.querySelectorAll('#deactivate');
+                     elementsDeactivate[i].classList.add("disabled");
+
+                     var elementsStart = document.querySelectorAll('#start');
+                     elementsStart[i].classList.add("disabled");
+
+                     var elementsStop = document.querySelectorAll('#stop');
+                     elementsStop[i].classList.remove("disabled");
+
+                 }
+
+                 if(curContent[i].outerText === "Interrupted"){
+
+                     var elementsActivate = document.querySelectorAll('#activate');
+                     elementsActivate[i].classList.remove("disabled");
+
+                     var elementsDeactivate = document.querySelectorAll('#deactivate');
+                     elementsDeactivate[i].classList.add("disabled");
+
+                     var elementsStart = document.querySelectorAll('#start');
+                     elementsStart[i].classList.remove("disabled");
+
+                     var elementsStop = document.querySelectorAll('#stop');
+                     elementsStop[i].classList.add("disabled");
+
+                 }
+
+
 
 
 

@@ -20,6 +20,7 @@ public class Job extends QuartzJobBean implements InterruptableJob {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         thisThread = Thread.currentThread();
+        // bug for tomorrow: when activated job finishes work --> status should be "Activated", not "Created"
         JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
         Task task = (Task) jobDataMap.get("task");
         task.setStatus("Running");
