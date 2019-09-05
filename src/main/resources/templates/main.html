@@ -8,6 +8,13 @@
         /*.status{*/
         /*    color: green;*/
         /*}*/
+
+        .disable_a_href{
+            pointer-events: none;
+        }
+        .enable_a_href{
+            pointer-events: auto;
+        }
     </style>
 
     <script th:inline="javascript">
@@ -21,9 +28,44 @@
         );
         function myInit(){
             var curContent = document.getElementsByClassName("status");
-            for(i = 0; i<curContent.length; i++){
+            //$('#deactivate*').addClass("disable_a_href");
+             for(i = 0; i<curContent.length; i++){
+                console.log(curContent[i].outerText);
+
+                // $('#deactivate*').filter(function () {
+                //     return curContent[i].outerText === "Deactivated"
+                // }).addClass("disable_a_href");
+
+                 if(curContent[i].outerText === "Created"){
+
+                     // add class disabled jumisi kobeip ketti, poka
+
+                     // var elmDeactivate = $('#deactivate*')[i];
+                     // var jelmDeactivate = $(elmDeactivate);
+                     // jelmDeactivate.addClass("disable_a_href");
+                     //
+                     // var elmStop = $('#stop*')[i];
+                     // var jelmStop = $(elmStop);
+                     // jelmStop.addClass("disable_a_href");
+                     //
+                     // var elmActivate = $('#activate*')[i];
+                     // var jelmActivate = $(elmActivate);
+                     // jelmActivate.removeClass("disable_a_href");
+                     //
+                     // var elmStart = $('#start*')[i];
+                     // var jelmStart = $(elmStart);
+                     // jelmStart.removeClass("disable_a_href");
+
+                     var element = document.querySelectorAll('#deactivate');
+                     element[i].classList.add("disabled");
+                 }
+
+
+
+
+
                 for(j = 0; j<strColorPairs.length; j++){
-                    if(strColorPairs[j].status == curContent[i].outerText){
+                    if(strColorPairs[j].status === curContent[i].outerText){
                         curContent[i].style.color = strColorPairs[j].color;
                     }
                 }
@@ -76,22 +118,28 @@
                 <tr th:if="${tasks.isEmpty()}">
                     <td colspan="3">No Tasks Available</td>
                 </tr>
-                <tr th:each="task : ${tasks}">
+                <tr th:each="task : ${tasks}" th:name="${task.id}">
                     <td><span th:text="${task.name}"></span></td>
                     <td><span th:text="${task.description}"></span></td>
                     <td><span th:text="${task.status}" class="status"></span></td>
                     <td><a class="btn btn-link btn-xs" th:href="@{/viewTask/{id}(id=${task.id})}">View</a></td>
                     <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
                     <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
-                    <td><a class="btn btn-primary btn-xs" th:href="@{/activateTask/{id}(id=${task.id})}">Activate</a></td>
-                    <td><a class="btn btn-danger btn-xs" th:href="@{/deactivateTask/{id}(id=${task.id})}">Deactivate</a></td>
-                    <td><a class="btn btn-primary btn-xs" th:href="@{/startTask/{id}(id=${task.id})}">Start now</a></td>
-                    <td><a class="btn btn-danger btn-xs" th:href="@{/stopTask/{id}(id=${task.id})}">Stop now</a></td>
+                    <td><a class="btn btn-primary btn-xs" id="activate" th:href="@{/activateTask/{id}(id=${task.id})}">Activate</a></td>
+                    <td><a class="btn btn-danger btn-xs" id="deactivate" th:href="@{/deactivateTask/{id}(id=${task.id})}">Deactivate</a></td>
+<!--                    <td><form th:action="@{/deactivateTask/{id}(id=${task.id})}">-->
+<!--                        <input type="submit" class="btn btn-danger btn-xs" id="deactivate" value="Deactivate">-->
+<!--                    </form></td>-->
+                    <td><a class="btn btn-primary btn-xs" id="start" th:href="@{/startTask/{id}(id=${task.id})}">Start now</a></td>
+                    <td><a class="btn btn-danger btn-xs" id="stop" th:href="@{/stopTask/{id}(id=${task.id})}">Stop now</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script type="text/javascript" th:src="@{webjars/jquery/3.4.1/jquery.js}"></script>
+
 </body>
 </html>

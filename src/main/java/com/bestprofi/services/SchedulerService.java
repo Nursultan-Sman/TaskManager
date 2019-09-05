@@ -68,7 +68,7 @@ public class SchedulerService {
 
     public void startTask(Task task) {
         try {
-            JobKey jobKey = new JobKey("JobName" + task.getId() ,"group" + task.getId());
+            JobKey jobKey = new JobKey("OnceJobName" + task.getId() ,"group" + task.getId());
 
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("task", task);
@@ -89,7 +89,10 @@ public class SchedulerService {
 
     public void interruptJob(Task task){
         try {
-            JobKey jobKey = findJobKey("JobName" + task.getId());
+            JobKey jobKey = findJobKey("OnceJobName" + task.getId());
+            /*if(jobKey == null){
+                jobKey = findJobKey("JobName"+task.getId());
+            }*/
             scheduler.interrupt(jobKey);
             task.setStatus("Interrupted");
             taskRepository.save(task);
