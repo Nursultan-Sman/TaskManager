@@ -63,9 +63,11 @@ public class MainController {
     }
 
     @PostMapping("/updateTask/{id}")
-    public String updateTask(@PathVariable("id") Task tasFromDb, @ModelAttribute(name = "task") Task task) {
-        BeanUtils.copyProperties(task, tasFromDb, "id");
-        taskRepository.save(tasFromDb);
+    public String updateTask(@PathVariable("id") Task taskFromDb, @ModelAttribute(name = "task") Task task) {
+        String status = taskFromDb.getStatus();
+        BeanUtils.copyProperties(task, taskFromDb, "id");
+        taskFromDb.setStatus(status);
+        taskRepository.save(taskFromDb);
         return "redirect:/";
     }
 

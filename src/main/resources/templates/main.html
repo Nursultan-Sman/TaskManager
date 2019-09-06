@@ -9,16 +9,16 @@
         /*    color: green;*/
         /*}*/
 
-        .disable_a_href{
-            pointer-events: none;
-        }
-        .enable_a_href{
-            pointer-events: auto;
-        }
+        /*.disable_a_href{*/
+        /*    pointer-events: none;*/
+        /*}*/
+        /*.enable_a_href{*/
+        /*    pointer-events: auto;*/
+        /*}*/
     </style>
 
     <script th:inline="javascript">
-        var CLASS_NAME = 'status';
+
         var strColorPairs = Array(
             {'status' : 'Activated', 'color' : 'green'},
             {'status' : 'Deactivated', 'color' : 'orange'},
@@ -26,6 +26,7 @@
             {'status' : 'Running', 'color' : 'green'},
             {'status' : 'Interrupted', 'color' : 'red'}
         );
+
         function myInit(){
             var curContent = document.getElementsByClassName("status");
             //$('#deactivate*').addClass("disable_a_href");
@@ -37,6 +38,13 @@
                      // var elmDeactivate = $('#deactivate*')[i];
                      // var jelmDeactivate = $(elmDeactivate);
                      // jelmDeactivate.addClass("disable_a_href");
+
+                     var elementsEdit = document.querySelectorAll('#edit');
+                     elementsEdit[i].classList.remove("disabled");
+
+                     var elementsDelete = document.querySelectorAll('#delete');
+                     elementsDelete[i].classList.remove("disabled");
+
 
                      var elementsActivate = document.querySelectorAll('#activate');
                      elementsActivate[i].classList.remove("disabled");
@@ -66,6 +74,12 @@
                      var elementsStop = document.querySelectorAll('#stop');
                      elementsStop[i].classList.add("disabled");
 
+                     var elementsEdit = document.querySelectorAll('#edit');
+                     elementsEdit[i].classList.add("disabled");
+
+                     var elementsDelete = document.querySelectorAll('#delete');
+                     elementsDelete[i].classList.add("disabled");
+
                  }
 
                  if(curContent[i].outerText === "Deactivated"){
@@ -81,6 +95,12 @@
 
                      var elementsStop = document.querySelectorAll('#stop');
                      elementsStop[i].classList.add("disabled");
+
+                     var elementsEdit = document.querySelectorAll('#edit');
+                     elementsEdit[i].classList.remove("disabled");
+
+                     var elementsDelete = document.querySelectorAll('#delete');
+                     elementsDelete[i].classList.remove("disabled");
 
                  }
 
@@ -98,6 +118,12 @@
                      var elementsStop = document.querySelectorAll('#stop');
                      elementsStop[i].classList.remove("disabled");
 
+                     var elementsEdit = document.querySelectorAll('#edit');
+                     elementsEdit[i].classList.add("disabled");
+
+                     var elementsDelete = document.querySelectorAll('#delete');
+                     elementsDelete[i].classList.add("disabled");
+
                  }
 
                  if(curContent[i].outerText === "Interrupted"){
@@ -113,6 +139,12 @@
 
                      var elementsStop = document.querySelectorAll('#stop');
                      elementsStop[i].classList.add("disabled");
+
+                     var elementsEdit = document.querySelectorAll('#edit');
+                     elementsEdit[i].classList.add("disabled");
+
+                     var elementsDelete = document.querySelectorAll('#delete');
+                     elementsDelete[i].classList.add("disabled");
 
                  }
 
@@ -175,8 +207,8 @@
                     <td><span th:text="${task.description}"></span></td>
                     <td><span th:text="${task.status}" class="status"></span></td>
                     <td><a class="btn btn-link btn-xs" th:href="@{/viewTask/{id}(id=${task.id})}">View</a></td>
-                    <td><a class="btn btn-warning btn-xs" th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
-                    <td><a class="btn btn-danger btn-xs" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
+                    <td><a class="btn btn-warning btn-xs" id="edit" th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
+                    <td><a class="btn btn-danger btn-xs" id="delete" th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
                     <td><a class="btn btn-primary btn-xs" id="activate" th:href="@{/activateTask/{id}(id=${task.id})}">Activate</a></td>
                     <td><a class="btn btn-danger btn-xs" id="deactivate" th:href="@{/deactivateTask/{id}(id=${task.id})}">Deactivate</a></td>
 <!--                    <td><form th:action="@{/deactivateTask/{id}(id=${task.id})}">-->
