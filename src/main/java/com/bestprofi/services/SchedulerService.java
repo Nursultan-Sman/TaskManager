@@ -90,9 +90,9 @@ public class SchedulerService {
     public void interruptJob(Task task){
         try {
             JobKey jobKey = findJobKey("OnceJobName" + task.getId());
-            /*if(jobKey == null){
+            if(jobKey == null){
                 jobKey = findJobKey("JobName"+task.getId());
-            }*/
+            }
             scheduler.interrupt(jobKey);
             task.setStatus("Interrupted");
             taskRepository.save(task);
@@ -101,20 +101,25 @@ public class SchedulerService {
         }
     }
 
-    public JobKey findJobKey(String jobName) throws SchedulerException {
-        // Check running jobs first
-        for (JobExecutionContext runningJob : scheduler.getCurrentlyExecutingJobs()) {
-            if (Objects.equals(jobName, runningJob.getJobDetail().getKey().getName())) {
-                return runningJob.getJobDetail().getKey();
-            }
-        }
-        // Check all jobs if not found
-        for (String groupName : scheduler.getJobGroupNames()) {
-            for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
-                if (Objects.equals(jobName, jobKey.getName())) {
-                    return jobKey;
+    public JobKey findJobKey(String jobName){
+
+        try {
+            // Check running jobs first
+            for (JobExecutionContext runningJob : scheduler.getCurrentlyExecutingJobs()) {
+                if (Objects.equals(jobName, runningJob.getJobDetail().getKey().getName())) {
+                    return runningJob.getJobDetail().getKey();
                 }
             }
+            // Check all jobs if not found
+            for (String groupName : scheduler.getJobGroupNames()) {
+                for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
+                    if (Objects.equals(jobName, jobKey.getName())) {
+                        return jobKey;
+                    }
+                }
+            }
+        }catch (SchedulerException ex){
+            System.out.println(ex.getMessage());
         }
         return null;
     }

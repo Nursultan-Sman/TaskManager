@@ -103,7 +103,7 @@
                  if(curContent[i].outerText === "Interrupted"){
 
                      var elementsActivate = document.querySelectorAll('#activate');
-                     elementsActivate[i].classList.remove("disabled");
+                     elementsActivate[i].classList.add("disabled");
 
                      var elementsDeactivate = document.querySelectorAll('#deactivate');
                      elementsDeactivate[i].classList.add("disabled");
@@ -115,12 +115,6 @@
                      elementsStop[i].classList.add("disabled");
 
                  }
-
-
-
-
-
-
 
                 for(j = 0; j<strColorPairs.length; j++){
                     if(strColorPairs[j].status === curContent[i].outerText){
